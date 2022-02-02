@@ -10,7 +10,7 @@ import UploadFile from "./components/UploadFile";
 function App() {
   return (
     <div className="App">
-      {/* <Router>
+      <Router>
         <AuthProvider>
           <Routes>
             <Route path="/*" element={<Signup></Signup>}></Route>
@@ -25,8 +25,7 @@ function App() {
             />
           </Routes>
         </AuthProvider>
-      </Router> */}
-      <UploadFile></UploadFile>
+      </Router>
     </div>
   );
 }

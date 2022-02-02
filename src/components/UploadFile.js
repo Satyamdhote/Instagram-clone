@@ -5,11 +5,13 @@ import MovieIcon from "@material-ui/icons/Movie";
 import LinearProgress from "@mui/material/LinearProgress";
 import { v4 as uuidv4 } from "uuid";
 
-export default function UploadFile() {
+import { database, storage } from "../firebase";
+
+export default function UploadFile(props) {
   const [error, setError] = useState("");
   const [loading, setloading] = useState(false);
 
-  const handleChange = async () => {
+  const handleChange = async (file) => {
     if (file == null) {
       setError("Please select a file");
       setTimeout(() => {
@@ -25,6 +27,7 @@ export default function UploadFile() {
       return;
     }
     let uid = uuidv4();
+    setloading(true);
     const uploadTask = storage.ref(`/posts/${uid}/${file.name}`).put(file);
     uploadTask.on("state_changed", fn1, fn2, fn3);
     function fn1(snapshot) {
@@ -36,15 +39,43 @@ export default function UploadFile() {
       setTimeout(() => {
         setError("");
       }, 2000);
-      setLoading(false);
+      setloading(false);
       return;
     }
     function fn3() {
       uploadTask.snapshot.ref.getDownloadURL().then((url) => {
         console.log(url);
+        let obj = {
+          likes: [],
+          comment: [],
+          pid: uid,
+          purl: url,
+          uName: props.user.fullname,
+          uProfile: props.user.profileUrl,
+          userId: props.user.userId,
+          createdAt: database.getTimeStamp(),
+        };
+        database.posts
+          .add(obj)
+          .then(async (ref) => {
+            let res = await database.users.doc(props.user.userId).update({
+              postIds:
+                props.user.postIds != null
+                  ? [...props.user.postIds, ref.id]
+                  : [ref.id],
+            });
+          })
+          .then(() => {
+            setloading(false);
+          })
+          .catch((err) => {
+            setError(err);
+            setTimeout(() => {
+              setError("");
+            }, 2000);
+            setloading(false);
+          });
       });
-      setLoading(false);
-      navigate("/");
     }
   };
   return (
@@ -53,20 +84,21 @@ export default function UploadFile() {
         <Alert severity="error">{error}</Alert>
       ) : (
         <>
-          <input
-            type="file"
-            accept="video/*"
-            id="upload-input"
-            onChange={(e) => {
-              handleChange(e.target.files[0]);
-            }}
-          ></input>
           <label htmlFor="upload-input">
+            <input
+              type="file"
+              accept="video/*"
+              id="upload-input"
+              hidden={true}
+              onChange={(e) => {
+                handleChange(e.target.files[0]);
+              }}
+            ></input>
             <Button
-              color="secondary"
               variant="outlined"
-              component="span"
+              color="secondary"
               disabled={loading}
+              component="span"
             >
               <MovieIcon />
               &nbsp; Upload Video
