@@ -6,10 +6,12 @@ import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import Feed from "./components/Feed";
 import UploadFile from "./components/UploadFile";
+import Like from "./components/Like";
 
 function App() {
   return (
     <div className="App">
+      {/* <Like></Like> */}
       <Router>
         <AuthProvider>
           <Routes>
