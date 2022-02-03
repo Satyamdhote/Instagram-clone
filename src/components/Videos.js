@@ -21,6 +21,7 @@ export default function Videos(props) {
       className="videos-styling"
       id={props.id}
       onClick={handleClick}
+      autoPlay
       muted="muted"
     ></video>
   );

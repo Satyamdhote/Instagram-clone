@@ -1,5 +1,5 @@
 .video-container {
-  height: 80vh;
+  height: 82vh;
   border-radius: 20px;
   background-color: white;
   overflow: scroll;
@@ -17,8 +17,8 @@
 
 .fa {
   position: absolute;
-  bottom: 7%;
-  left: 10%;
+  bottom: 20%;
+  left: 5%;
 }
 
 .fa h4 {
@@ -30,7 +30,7 @@
 
 .icon-styling {
   position: absolute;
-  bottom: 2%;
+  bottom: 16%;
   left: 12%;
 }
 
@@ -47,8 +47,8 @@
 .chat-styling {
   color: white;
   position: absolute;
-  bottom: 2%;
-  left: 25%;
+  bottom: 16%;
+  left: 17%;
 }
 
 .modal-container {
@@ -65,7 +65,17 @@
   justify-content: center;
 }
 
+/* .modal-video {
+  height: 100%;
+  width: 100%;
+}
+
+.modal-video video {
+  height: 84vh;
+} */
+
 .video-modal video {
+  width: 55vh;
   height: 85vh;
 }
 

@@ -24,9 +24,9 @@ export default function Feed() {
         flexDirection: "column",
       }}
     >
-      <div className="comp" style={{ width: "50%" }}>
+      {/* <div className="comp" style={{ width: "50%" }}>
         <h1>Welcome to Feed</h1>
-      </div>
+      </div> */}
       <UploadFile user={userData} />
       <Posts userData={userData} />
     </div>
